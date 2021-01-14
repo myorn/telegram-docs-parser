@@ -21,6 +21,7 @@ async def main(chat,
                max_date: str = '',
                min_date: str = '',
                limit: int = None,
+               filepath: str = None,
                **kwargs):
     """
     Для того чтобы вытаскивать файлы из ТГ чатов.
@@ -31,6 +32,7 @@ async def main(chat,
     :param max_date: дата после которой начнется спуск в прошлое
     :param min_date: дата на которой закончится спуск в прошлое
     :param limit: Максимальное количество загруженных сообщений
+    :param filepath: Путь для сохранения фалов
     :return:
     """
     min_date = datp.parse(min_date) if min_date else None
@@ -50,7 +52,7 @@ async def main(chat,
                 break
             print('\n', message.media.document.attributes[0].file_name, '\n')
             # print(message.stringify())
-            await message.download_media(progress_callback=callback)
+            await message.download_media(file=filepath, progress_callback=callback)
 
 
 def callback(current, total):
